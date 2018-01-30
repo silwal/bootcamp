@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1517332534130.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "1A452602",
+    "lastKnownWriteTime" : 32651513914720368,
+    "last_content_update" : 1517332534130,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "66A6A7AD",
+        "caption" : "gun_owners_vote",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=gun_owners_vote&cache_key=66A6A7AD",
+        "displayedObservations" : "5914",
+        "environment" : "",
+        "object" : "gun_owners_vote",
+        "preview" : "0",
+        "totalObservations" : "5914",
+        "variables" : "2"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

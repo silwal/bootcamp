@@ -1,0 +1,4 @@
+"0","gun_owners_vote <- anes[names(anes) %in% c(""owngun_owngun"",""interest_voted2008"")]"
+"0","gun_owners_vote <- na.omit(gun_owners_vote)"
+"0","gun_owners_agg <- table(gun_owners_vote$interest_voted2008,gun_owners_vote$owngun_owngun)"
+"0","barplot(gun_owners_agg,main=""Did Gun Owners Vote in 2008?"", xlab = ""Own Gun?"", ylab = ""Count"", col = c(""purple"",""sky blue""),las=1,legend=rownames(gun_owners_agg))"

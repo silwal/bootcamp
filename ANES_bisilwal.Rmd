@@ -1,0 +1,165 @@
+---
+title: "ANES Data analysis"
+author: "Binayak Silwal"
+date: "1/28/2018"
+output:
+  pdf_document: default
+
+---
+
+<!-- For more info on RMarkdown see http://rmarkdown.rstudio.com/ -->
+
+<!-- Enter the code required to load your data in the space below. The data will be loaded but the line of code won't show up in your write up (echo=FALSE) in order to save space-->
+```{r echo=FALSE, cache=TRUE, include=FALSE}
+#Load your data here
+library(tidyverse)
+library(ggplot2)
+library(geofacet)
+library(stringr)
+library(fiftystater)
+library(tibble)
+library(dplyr)
+
+anes <- read.csv("data/anes.csv", header=TRUE)
+anes <- anes %>% mutate_if(is.character, factor) # strings as factors
+
+# All voters who think Gun has importance
+voters_gun_importance <- anes[which((anes$gun_importance == "Very Important") | (anes$gun_importance == "Extremely Important") | (anes$gun_importance == "Somewhat Important")),names(anes) %in% 
+                                c("caseid","gun_importance","gender_respondent","incgroup_prepost","sample_state","owngun_owngun")]
+
+```
+
+<!-- In the remainder of the document, add R code chunks as needed -->
+
+### Introduction:
+
+Insert introduction here...  Explain the question you are trying to answer.
+
+Question: Is there an association between gun ownership and if they will vote in the United States 2012 presidential election?
+
+### Data:
+
+Describe the source of the data
+
+Here are few hightlights on Data: 
+
+Data source is ANES (American National Election Studies)
+Its a Time Series Study.
+Sample is cross section of U.S. Eligible Voters.
+The data has two waves (Pre & Post Election)
+
+
+### Exploratory data analysis:
+
+Insert exploratory data analysis here...
+
+1. How does gun importance distribution looks like in the sample data set?
+2. Gun supporter group Gender distribution?
+3. Rank state by number of voters who support guns?
+4. Distribution of voters who own a gun and voted in 2008?
+
+  Describe what you did.
+I created a visualization for each exploratory data analysis I did. 
+  Include at least 3 different graphs.  
+```{r}
+ # 1. How does gun importance distribution looks like in the sample data set?
+
+voters_gun_dist <- anes[names(anes) %in% c("gun_importance")]
+voters_gun_dist <- na.omit(voters_gun_dist)
+pie(table(voters_gun_dist$gun_importance))
+
+```
+
+```{r}
+# 2. Gun supporter group Gender distribution?
+voters_gun_support <- anes[names(anes) %in% c("gender_respondent","gun_importance")]
+voters_gun_support <- na.omit(voters_gun_support)
+counts <- table(voters_gun_support$gender_respondent, voters_gun_support$gun_importance)
+
+refcols <-  c("Not Importantat All","Not Too Important","Somewhat Important","Very Important","Extremely Important")
+counts <- counts[, c(refcols, setdiff(names(counts), refcols))]
+
+barplot(counts,main="Gun Importance Distribution", xlab = "Importance", ylab = "count", col = c("purple","sky blue"),las=1,legend=rownames(counts))
+```
+
+```{r}
+#3. Rank state by number of voters who support guns?
+gun_supporting_voters_state_ranking <- anes[names(anes) %in% c("sample_state","gun_importance")]
+gun_supporting_voters_state_ranking <- na.omit(gun_supporting_voters_state_ranking)
+counts_for_rank <- data.frame(gun_supporting_voters_state_ranking$sample_state, gun_supporting_voters_state_ranking$gun_importance)
+
+count_aggregated <- aggregate(counts_for_rank$gun_supporting_voters_state_ranking.gun_importance,list(states = counts_for_rank$gun_supporting_voters_state_ranking.sample_state), length)
+
+create_gradient_state_tile_map <- function(state, value, title, legend_title, low_color='#ccdbe5', high_color="#114365", state_grid='us_state_grid2') {
+  
+  df <- as.tibble(data.frame(state, value))
+  
+  fig <- df %>% 
+    mutate(x = 1) %>% # size of the bar being plotted. All bars should be same size to make perfect squares
+    mutate(label_y = .5) %>%  # this location of state labels
+    mutate(label_x = 1) %>% 
+    ggplot()+
+    geom_bar(mapping=aes(x=x, fill=value))  +
+    facet_geo(~ state, grid=state_grid) +
+    scale_fill_continuous(low = low_color, high= high_color, guide = guide_colorbar(title = legend_title)) + # creates shading pattern
+    ggtitle(title) +
+    theme_classic() + # theme classic removes many ggplot defaults (grey background, etc)
+    theme(plot.title = element_text(size = 28), # format the plot
+          plot.margin = unit(c(1,1,1,1), "cm"),
+          legend.text=element_text(size=16),
+          legend.title = element_text(size=16),
+          axis.title=element_blank(),
+          axis.text=element_blank(),
+          axis.ticks = element_blank(),
+          strip.text.x = element_blank(),
+          axis.line = element_blank()) +
+    geom_text(aes(x=label_x, y=label_y, label=state), color='#ffffff', size=4) 
+  
+  return(fig)
+}
+# Using 2016 values, create a tile map
+tile_map <- create_gradient_state_tile_map(count_aggregated$states,count_aggregated$x, title='State Gun Supporters', legend_title = "Sample voter count" )
+tile_map
+```
+
+4. Distribution of voters who own a gun and voted in 2008?
+
+Variables: 
+owngun_owngun
+interest_voted2008
+```{r}
+gun_owners_vote <- anes[names(anes) %in% c("owngun_owngun","interest_voted2008")]
+gun_owners_vote <- na.omit(gun_owners_vote)
+gun_owners_agg <- table(gun_owners_vote$interest_voted2008,gun_owners_vote$owngun_owngun)
+barplot(gun_owners_agg,main="Did Gun Owners Vote in 2008?", xlab = "Own Gun?", ylab = "Count", col = c("purple","sky blue"),las=1,legend=rownames(gun_owners_agg))
+```
+
+
+### Inference:
+
+Voters population who owns firearms and thinks firearms are important my not contribute to the election results. Or may not vote.
+
+#### Hypothesis:
+Frame your question in terms of a hypothesis test.
+
+Gun Owners or enthusiast are voting less.
+
+#### Findings:
+```{r}
+
+
+```
+### Conclusion:
+
+Insert conclusion here...
+
+### References:
+
+Data Map: https://medium.com/@NickDoesData/visualizing-geographic-data-in-r-fb2e0f5b59c5
+Various R Topics: https://www.r-bloggers.com/
+Stack Overflow: https://stackoverflow.com/questions/tagged/r
+
+
+### Appendix:
+
+Insert appendix here...

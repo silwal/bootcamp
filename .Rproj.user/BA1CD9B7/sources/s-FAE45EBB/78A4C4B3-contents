@@ -1,0 +1,59 @@
+---
+title: "ANES Data analysis"
+author: "Binayak Silwal"
+date: "1/28/2018"
+output:
+  pdf_document: default
+
+---
+
+<!-- For more info on RMarkdown see http://rmarkdown.rstudio.com/ -->
+
+<!-- Enter the code required to load your data in the space below. The data will be loaded but the line of code won't show up in your write up (echo=FALSE) in order to save space-->
+```{r echo=FALSE, cache=TRUE, include=FALSE}
+#Load your data here
+# strings as factors
+
+```
+
+<!-- In the remainder of the document, add R code chunks as needed -->
+
+### Introduction:
+
+Insert introduction here...  Explain the question you are trying to answer.
+
+### Data:
+
+Describe the source of the data
+
+### Exploratory data analysis:
+
+Insert exploratory data analysis here...
+
+  Describe what you did.
+
+  Include at least 3 different graphs.  
+```{r}
+
+```
+
+### Inference:
+
+#### Hypothesis:
+Frame your question in terms of a hypothesis test.
+
+#### Findings:
+```{r}
+
+```
+### Conclusion:
+
+Insert conclusion here...
+
+### References:
+
+Insert references here...
+
+### Appendix:
+
+Insert appendix here...

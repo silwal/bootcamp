@@ -1,0 +1,8 @@
+"0","# 2. Gun supporter group Gender distribution?"
+"0","voters_gun_support <- anes[names(anes) %in% c(""gender_respondent"",""gun_importance"")]"
+"0","voters_gun_support <- na.omit(voters_gun_support)"
+"0","counts <- table(voters_gun_support$gender_respondent, voters_gun_support$gun_importance)"
+"0","#counts$ <- factor(tips2$day,levels = c(""Fri"", ""Sat"", ""Sun"", ""Thur""))"
+"0","refcols <-  c(""Not Importantat All"",""Not Too Important"",""Somewhat Important"",""Very Important"",""Extremely Important"")"
+"0","counts <- counts[, c(refcols, setdiff(names(counts), refcols))]"
+"0","barplot(counts,main=""Gun Importance Distribution"", xlab = ""Importance"", ylab = ""count"", col = c(""purple"",""sky blue""),las=1,legend=rownames(counts))"

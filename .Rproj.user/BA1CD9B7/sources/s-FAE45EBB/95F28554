@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1517276815320.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "95F28554",
+    "lastKnownWriteTime" : 32651513914720368,
+    "last_content_update" : 1517276815320,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "C1D55308",
+        "caption" : "gun_supporting_states",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=gun_supporting_states&cache_key=C1D55308",
+        "displayedObservations" : "5902",
+        "environment" : "",
+        "object" : "gun_supporting_states",
+        "preview" : "0",
+        "totalObservations" : "5902",
+        "variables" : "3"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
